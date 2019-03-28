@@ -1,0 +1,17 @@
+{
+    "name": "brandembassy/pr-slack-bot",
+    "minimum-stability": "stable",
+    "license": "proprietary",
+    "autoload": {
+        "psr-4": {
+            "BE\\PRSlackBot\\": "src"
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "require-dev": {
+        "nette/bootstrap": "3.0.0-RC1",
+        "brandembassy/coding-standard": "^5.3"
+    }
+}
