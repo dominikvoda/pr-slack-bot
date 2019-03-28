@@ -28,7 +28,7 @@ class SlackWebhookProcessor
             return;
         }
 
-        if ($requestBody['event']['type'] !== 'link_shared') {
+        if ($requestBody['event']['type'] === 'link_shared') {
             $this->processLinkSharedEvent($requestBody);
         }
     }
