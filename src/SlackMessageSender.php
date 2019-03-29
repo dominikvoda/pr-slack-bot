@@ -39,4 +39,27 @@ class SlackMessageSender
             ]
         );
     }
+
+
+    public function sendAttachment(string $channel, string $messageId, string $message, string $imageUrl): void
+    {
+        $this->client->post(
+            'https://slack.com/api/chat.postMessage',
+            [
+                RequestOptions::HEADERS => ['Authorization' => 'Bearer ' . $this->slackBotAccessToken],
+                RequestOptions::JSON    => [
+                    'channel'     => $channel,
+                    'thread_ts'   => $messageId,
+                    'text'        => $message,
+                    'attachments' => [
+                        [
+                            'text'      => '',
+                            'color'     => '#ffffff',
+                            'image_url' => $imageUrl,
+                        ],
+                    ],
+                ],
+            ]
+        );
+    }
 }
