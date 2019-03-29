@@ -4,6 +4,8 @@ namespace BE\PRSlackBot;
 
 class GitHubWebhookProcessor
 {
+    private const EVENT_TYPE_PULL_REQUEST = 'pull_request';
+
     /**
      * @var string[]
      */
@@ -36,7 +38,15 @@ class GitHubWebhookProcessor
     /**
      * @param mixed[] $requestBody
      */
-    public function process(array $requestBody): void
+    public function process(string $eventType, array $requestBody): void
+    {
+        if ($eventType === self::EVENT_TYPE_PULL_REQUEST && $requestBody['action'] === 'submitted') {
+            $this->processSubmittedReview($requestBody);
+        }
+    }
+
+
+    private function processSubmittedReview(array $requestBody): void
     {
         $pullRequest = $this->pullRequestsStorage->findByHtmlUrl($requestBody['pull_request']['html_url']);
 
@@ -44,14 +54,6 @@ class GitHubWebhookProcessor
             return;
         }
 
-        if ($requestBody['action'] === 'submitted') {
-            $this->processSubmittedReview($pullRequest, $requestBody);
-        }
-    }
-
-
-    private function processSubmittedReview(PullRequestInterface $pullRequest, array $requestBody): void
-    {
         $icon = self::$icons[$requestBody['review']['state']];
 
         $message = sprintf(
