@@ -7,7 +7,7 @@ interface PullRequestsStorageInterface
     public function findByHtmlUrl(string $htmlUrl): ?PullRequestInterface;
 
 
-    public function findByMasterCommit(string $masterCommit): ?PullRequestInterface;
+    public function findByHeadCommit(string $headCommit): ?PullRequestInterface;
 
 
     public function createPullRequest(string $htmlUrl, ?string $headCommit): PullRequestInterface;
