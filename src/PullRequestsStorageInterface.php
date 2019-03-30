@@ -7,10 +7,16 @@ interface PullRequestsStorageInterface
     public function findByHtmlUrl(string $htmlUrl): ?PullRequestInterface;
 
 
-    public function createPullRequest(string $htmlUrl): PullRequestInterface;
+    public function findByMasterCommit(string $masterCommit): ?PullRequestInterface;
 
 
-    public function updatePullRequest(
+    public function createPullRequest(string $htmlUrl, ?string $headCommit): PullRequestInterface;
+
+
+    public function updateHeadCommit(PullRequestInterface $pullRequest, string $headCommit): void;
+
+
+    public function updateSlackData(
         PullRequestInterface $pullRequest,
         string $slackChannel,
         string $slackUser,

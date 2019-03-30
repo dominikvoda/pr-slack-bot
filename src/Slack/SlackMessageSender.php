@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace BE\PRSlackBot;
+namespace BE\PRSlackBot\Slack;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;

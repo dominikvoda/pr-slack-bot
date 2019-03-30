@@ -7,11 +7,17 @@ interface PullRequestInterface
     public function getPullRequestHtmlUrl(): string;
 
 
-    public function getSlackUser(): string;
+    public function getSlackUser(): ?string;
 
 
-    public function getSlackChannel(): string;
+    public function getSlackChannel(): ?string;
 
 
-    public function getSlackMessageId(): string;
+    public function getSlackMessageId(): ?string;
+
+
+    public function getHeadCommit(): ?string;
+
+
+    public function isSlackReady(): bool;
 }

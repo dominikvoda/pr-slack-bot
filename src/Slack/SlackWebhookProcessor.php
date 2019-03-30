@@ -1,7 +1,8 @@
 <?php declare(strict_types = 1);
 
-namespace BE\PRSlackBot;
+namespace BE\PRSlackBot\Slack;
 
+use BE\PRSlackBot\PullRequestsStorageInterface;
 use Nette\Utils\Strings;
 
 class SlackWebhookProcessor
@@ -46,10 +47,10 @@ class SlackWebhookProcessor
             $pullRequest = $this->pullRequestsStorage->findByHtmlUrl($link['url']);
 
             if ($pullRequest === null) {
-                $pullRequest = $this->pullRequestsStorage->createPullRequest($link['url']);
+                $pullRequest = $this->pullRequestsStorage->createPullRequest($link['url'], null);
             }
 
-            $this->pullRequestsStorage->updatePullRequest(
+            $this->pullRequestsStorage->updateSlackData(
                 $pullRequest,
                 $requestBody['event']['channel'],
                 $requestBody['event']['user'],
