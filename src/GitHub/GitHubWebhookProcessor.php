@@ -6,6 +6,7 @@ class GitHubWebhookProcessor
 {
     private const EVENT_TYPE_PULL_REQUEST = 'pull_request';
     private const EVENT_TYPE_PULL_REQUEST_REVIEW = 'pull_request_review';
+    private const EVENT_TYPE_STATUS = 'status';
 
     /**
      * @var PullRequestEventHandler
@@ -17,13 +18,20 @@ class GitHubWebhookProcessor
      */
     private $pullRequestReviewEventHandler;
 
+    /**
+     * @var StatusEventHandler
+     */
+    private $statusEventHandler;
+
 
     public function __construct(
         PullRequestEventHandler $pullRequestEventHandler,
-        PullRequestReviewEventHandler $pullRequestReviewEventHandler
+        PullRequestReviewEventHandler $pullRequestReviewEventHandler,
+        StatusEventHandler $statusEventHandler
     ) {
         $this->pullRequestEventHandler = $pullRequestEventHandler;
         $this->pullRequestReviewEventHandler = $pullRequestReviewEventHandler;
+        $this->statusEventHandler = $statusEventHandler;
     }
 
 
@@ -38,6 +46,9 @@ class GitHubWebhookProcessor
 
         if ($eventType === self::EVENT_TYPE_PULL_REQUEST_REVIEW) {
             $this->pullRequestReviewEventHandler->handle($requestBody);
+        }
+        if ($eventType === self::EVENT_TYPE_STATUS) {
+            $this->statusEventHandler->handle($requestBody);
         }
     }
 }

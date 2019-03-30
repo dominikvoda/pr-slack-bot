@@ -13,5 +13,9 @@
     "require-dev": {
         "nette/bootstrap": "3.0.0-RC1",
         "brandembassy/coding-standard": "^5.3"
+    },
+    "scripts": {
+        "phpcs": "vendor/bin/phpcs --standard=BrandEmbassyCodingStandard src",
+        "phpcbf": "vendor/bin/phpcbf --standard=BrandEmbassyCodingStandard src"
     }
 }

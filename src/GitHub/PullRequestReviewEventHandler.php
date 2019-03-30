@@ -4,6 +4,7 @@ namespace BE\PRSlackBot\GitHub;
 
 use BE\PRSlackBot\PullRequestsStorageInterface;
 use BE\PRSlackBot\Slack\SlackMessageSender;
+use function sprintf;
 
 class PullRequestReviewEventHandler
 {
@@ -36,6 +37,9 @@ class PullRequestReviewEventHandler
     }
 
 
+    /**
+     * @param mixed[] $requestBody
+     */
     public function handle(array $requestBody): void
     {
         if ($requestBody['action'] === 'submitted') {
@@ -44,6 +48,9 @@ class PullRequestReviewEventHandler
     }
 
 
+    /**
+     * @param mixed[] $requestBody
+     */
     private function processSubmittedReview(array $requestBody): void
     {
         $pullRequest = $this->pullRequestsStorage->findByHtmlUrl($requestBody['pull_request']['html_url']);

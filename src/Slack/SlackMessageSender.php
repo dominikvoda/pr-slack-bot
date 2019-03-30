@@ -62,4 +62,39 @@ class SlackMessageSender
             ]
         );
     }
+
+
+    public function sendButtonAttachment(
+        string $channel,
+        string $messageId,
+        string $message,
+        string $buttonText,
+        string $buttonUrl
+    ): void {
+        $this->client->post(
+            'https://slack.com/api/chat.postMessage',
+            [
+                RequestOptions::HEADERS => ['Authorization' => 'Bearer ' . $this->slackBotAccessToken],
+                RequestOptions::JSON    => [
+                    'channel'     => $channel,
+                    'thread_ts'   => $messageId,
+                    'text'        => $message,
+                    'attachments' => [
+                        [
+                            'color'    => '#ffffff',
+                            'fallback' => $buttonText . ' at ' . $buttonUrl,
+                            'actions'  => [
+                                [
+                                    'type'  => 'button',
+                                    'text'  => $buttonText,
+                                    'url'   => $buttonUrl,
+                                    'style' => 'danger',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ]
+        );
+    }
 }

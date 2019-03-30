@@ -7,13 +7,6 @@ use BE\PRSlackBot\Slack\SlackMessageSender;
 
 class PullRequestEventHandler
 {
-    private static $mergeMemes = [
-        'https://cdn-images-1.medium.com/max/1200/1*5WmdexD6wYR05e-X9puJYA.jpeg',
-        'https://cdn-images-1.medium.com/max/1600/1*7sSR_gIb6qLa8NrKtQ-Hsw.png',
-        'https://i.redd.it/dsdbmyoirso01.jpg',
-        'https://media.giphy.com/media/hZj44bR9FVI3K/giphy-downsized.gif',
-    ];
-
     /**
      * @var PullRequestsStorageInterface
      */
@@ -41,6 +34,9 @@ class PullRequestEventHandler
     }
 
 
+    /**
+     * @param mixed[] $requestBody
+     */
     public function handle(array $requestBody): void
     {
         if ($requestBody['action'] === 'opened') {
@@ -57,6 +53,9 @@ class PullRequestEventHandler
     }
 
 
+    /**
+     * @param mixed[] $requestBody
+     */
     private function processPullRequestOpened(array $requestBody): void
     {
         $this->updatePullRequestHeadCommit(
@@ -66,6 +65,9 @@ class PullRequestEventHandler
     }
 
 
+    /**
+     * @param mixed[] $requestBody
+     */
     private function processPullRequestSynchronize(array $requestBody): void
     {
         $this->updatePullRequestHeadCommit(
@@ -75,6 +77,9 @@ class PullRequestEventHandler
     }
 
 
+    /**
+     * @param mixed[] $requestBody
+     */
     private function processPullRequestClosed(array $requestBody): void
     {
         $pullRequest = $this->pullRequestsStorage->findByHtmlUrl($requestBody['pull_request']['html_url']);
