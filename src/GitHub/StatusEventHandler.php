@@ -53,7 +53,7 @@ class StatusEventHandler
             return;
         }
 
-        $message = '*' . $requestBody['context'] . ' passed* :bananadance: :bananadance: :bananadance: ';
+        $message = '*' . $requestBody['context'] . ' passed* :bananadance:';
 
         $this->slackMessageSender->send($pullRequest->getSlackChannel(), $pullRequest->getSlackMessageId(), $message);
     }
