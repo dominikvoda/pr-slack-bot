@@ -8,13 +8,17 @@ use function sprintf;
 
 class PullRequestReviewEventHandler
 {
+    private const CHANGES_REQUESTED = 'changes_requested';
+    private const COMMENTED = 'commented';
+    private const APPROVED = 'approved';
+
     /**
      * @var string[]
      */
     private static $icons = [
-        'changes_requested' => ':x:',
-        'commented'         => ':speech_balloon:',
-        'approved'          => ':heavy_check_mark:',
+        self::CHANGES_REQUESTED => ':x:',
+        self::COMMENTED         => ':speech_balloon:',
+        self::APPROVED          => ':heavy_check_mark:',
     ];
 
     /**
@@ -59,12 +63,19 @@ class PullRequestReviewEventHandler
             return;
         }
 
-        $icon = self::$icons[$requestBody['review']['state']];
+        $state = $requestBody['review']['state'];
+        $body = $requestBody['review']['body'];
+
+        if ($state === self::COMMENTED && $body === '') {
+            return;
+        }
+
+        $icon = self::$icons[$state];
 
         $message = sprintf(
             '%s %sfrom *%s*',
             $icon,
-            $requestBody['review']['body'] . ' ',
+            $body . ' ',
             $requestBody['review']['user']['login']
         );
 
